@@ -1,4 +1,4 @@
-package com.devsu.bankmsclients;
+package com.devsu.bank.ms.clients;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

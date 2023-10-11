@@ -1,4 +1,4 @@
-package com.devsu.bankmsclients;
+package com.devsu.bank.ms.clients;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
