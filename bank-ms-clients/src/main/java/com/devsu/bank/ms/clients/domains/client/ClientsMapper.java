@@ -36,4 +36,6 @@ public interface ClientsMapper extends ICrudMapper<ClientDTO, Client> {
 
     ClientDetailResponse toDetailResponse(ClientDTO dto);
 
+    @Mapping(target = "password", source = "password")
+    ClientDTO updateDTOPassword(ClientDTO dto, String password);
 }

@@ -7,7 +7,7 @@ public record ClientCreateRequest(
         String personalId,
         String address,
         String phone,
-        String clientId,
+        String password,
         Boolean state
 ) {
 }

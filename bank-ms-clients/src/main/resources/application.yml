@@ -1,7 +1,7 @@
-spring.datasource.url: jdbc:h2:mem:accounts_db;DB_CLOSE_DELAY=-1
+spring.datasource.url: jdbc:h2:mem:clients_db;DB_CLOSE_DELAY=-1
 spring.datasource.username: sa
 spring.datasource.password: sa
-server.port: 8082
+server.port: 8081
 spring.jpa.generate-ddl: true
 spring.h2.console.enabled: true
 springdoc.show-actuator: true
@@ -10,8 +10,3 @@ spring:
     user:
       name: user
       password: pass
-
-com.devsu.services:
-  clients:
-    base-url: "http://localhost:8081/v1/clients"
-

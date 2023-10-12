@@ -2,6 +2,8 @@ package com.devsu.bank.ms.clients.domains.client.models;
 
 import com.devsu.bank.ms.clients.domains.commons.models.Gender;
 import lombok.Builder;
+import lombok.Data;
+import lombok.Setter;
 
 import java.util.UUID;
 
