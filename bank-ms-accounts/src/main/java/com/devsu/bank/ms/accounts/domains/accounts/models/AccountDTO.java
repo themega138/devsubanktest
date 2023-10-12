@@ -1,7 +1,5 @@
 package com.devsu.bank.ms.accounts.domains.accounts.models;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 
 public record AccountDTO(
