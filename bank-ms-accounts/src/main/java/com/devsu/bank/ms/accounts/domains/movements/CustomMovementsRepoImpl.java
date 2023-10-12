@@ -10,16 +10,19 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
+@Component
 public class CustomMovementsRepoImpl implements CustomMovementsRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public Movement createMovement(Movement movement) {
-        entityManager.getTransaction().begin();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Account> q = cb.createQuery(Account.class);
@@ -41,7 +44,8 @@ public class CustomMovementsRepoImpl implements CustomMovementsRepo {
             throw new WrongMovementException("The account does not have enough balance to do this movement...");
         }
 
-        BigDecimal newBalance = account.getBalance().add(movement.getAmount());
+        movement.setInitialBalance(BigDecimal.valueOf(account.getBalance().doubleValue()));
+        BigDecimal newBalance = BigDecimal.valueOf(account.getBalance().add(movement.getAmount()).doubleValue());
         account.setBalance(newBalance);
         movement.setAccount(account);
         movement.setCurrentBalance(newBalance);
@@ -49,7 +53,6 @@ public class CustomMovementsRepoImpl implements CustomMovementsRepo {
         entityManager.persist(movement);
         entityManager.persist(account);
 
-        entityManager.getTransaction().commit();
 
         return movement;
     }

@@ -18,7 +18,7 @@ public class HttpClientsServiceImpl implements IClientsService {
     }
 
     @Override
-    public ClientDTO getByClientId(String clientId) {
+    public ClientDTO getByClientId(Long clientId) {
         URI url = URI.create(properties.getBaseUrl().concat("/%s".formatted(clientId)));
         return this.client.getForObject(url, ClientDTO.class);
     }

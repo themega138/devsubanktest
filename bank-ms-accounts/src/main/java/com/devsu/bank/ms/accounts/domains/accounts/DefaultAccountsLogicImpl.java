@@ -10,6 +10,7 @@ import com.devsu.bank.ms.accounts.domains.movements.models.Movement;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementDTO;
 import com.devsu.bank.ms.accounts.services.clients.IClientsService;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +21,8 @@ public class DefaultAccountsLogicImpl extends DefaultAbstractCrudLogic<AccountDT
     private final AccountsMapper mapper;
     private final MovementsRepo movementsRepo;
     private final MovementsMapper movementsMapper;
-
     private final IClientsService clientsService;
+    private final AccountsRepo accountsRepo;
 
     public DefaultAccountsLogicImpl(
             AccountsRepo accountsRepo,
@@ -34,28 +35,28 @@ public class DefaultAccountsLogicImpl extends DefaultAbstractCrudLogic<AccountDT
         this.mapper = mapper;
         this.movementsMapper = movementsMapper;
         this.clientsService = clientsService;
+        this.accountsRepo = accountsRepo;
     }
 
     @Override
     public AccountDTO getOne(Long id) {
         AccountDTO account = super.getOne(id);
-        ClientDTO client = this.clientsService.getByClientId(account.clientId());
+        ClientDTO client = this.clientsService.getByClientId(account.getClient().id());
         return this.mapper.updateDTO(account, client);
     }
 
     @Override
     public AccountDTO createOne(AccountDTO accountDTO) {
-        this.clientsService.getByClientId(accountDTO.clientId());
+        this.clientsService.getByClientId(accountDTO.getClient().id());
         return super.createOne(accountDTO);
     }
 
     @Override
     public MovementDTO createAccountMovement(String accountNumber, MovementDTO dto) {
-        Movement entity = this.movementsMapper.updateEntity(Movement.builder()
-                .account(Account.builder()
-                        .number(accountNumber)
-                        .build())
-                .build(), dto);
+        Account account = this.accountsRepo.findByNumber(accountNumber)
+                .orElseThrow(() -> new RuntimeException("Wrong account number..."));
+        Movement entity = this.movementsMapper.toEntity(dto);
+        entity.setAccount(account);
 
         return Optional.of(this.movementsRepo.createMovement(entity))
                 .map(this.movementsMapper::toDTO)
@@ -63,6 +64,7 @@ public class DefaultAccountsLogicImpl extends DefaultAbstractCrudLogic<AccountDT
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<MovementDTO> getAccountMovement(String accountNumber) {
         return this.movementsRepo.findAllByAccount_Number(accountNumber)
                 .map(this.movementsMapper::toDTO)

@@ -4,9 +4,8 @@ import java.math.BigDecimal;
 
 public record MovementCreateRequest(
 
-        String accountId,
+        Long accountId,
         BigDecimal amount,
-        BigDecimal currentBalance,
         String type,
         Boolean state
 ) {

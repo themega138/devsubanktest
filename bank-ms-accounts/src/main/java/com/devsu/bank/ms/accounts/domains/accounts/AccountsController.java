@@ -5,8 +5,8 @@ import com.devsu.bank.ms.accounts.domains.accounts.models.AccountDTO;
 import com.devsu.bank.ms.accounts.domains.accounts.models.AccountDetailResponse;
 import com.devsu.bank.ms.accounts.domains.accounts.models.AccountItemResponse;
 import com.devsu.bank.ms.accounts.domains.accounts.models.AccountUpdateRequest;
+import com.devsu.bank.ms.accounts.domains.accounts.models.MovementCreateRequest;
 import com.devsu.bank.ms.accounts.domains.movements.MovementsMapper;
-import com.devsu.bank.ms.accounts.domains.movements.models.MovementCreateRequest;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementDTO;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementDetailResponse;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementItemResponse;
@@ -49,13 +49,13 @@ public class AccountsController {
     }
 
     @GetMapping("{id}")
-    public AccountDetailResponse getClientDetail(
+    public AccountDetailResponse getAccountDetail(
             @PathVariable Long id) {
         return mapper.toDetailResponse(this.logic.getOne(id));
     }
 
     @PostMapping()
-    public AccountDetailResponse createClient(
+    public AccountDetailResponse createAccount(
             @RequestBody() AccountCreateRequest data
     ) {
         AccountDTO result = this.logic.createOne(mapper.toDTO(data));
@@ -69,7 +69,7 @@ public class AccountsController {
     }
 
     @PutMapping("{id}")
-    public void updateClient(
+    public void updateAccount(
             @PathVariable Long id,
             @RequestBody AccountUpdateRequest data
     ) {
@@ -77,16 +77,16 @@ public class AccountsController {
     }
 
     @PostMapping("{accountNumber}/movements")
-    public MovementDetailResponse createClientMovement(
+    public MovementDetailResponse createAccountMovement(
             @PathVariable String accountNumber,
-            @RequestBody() MovementCreateRequest data
+            @RequestBody MovementCreateRequest data
     ) {
         MovementDTO result = this.logic.createAccountMovement(accountNumber, movementsMapper.toDTO(data));
         return movementsMapper.toDetailResponse(result);
     }
 
     @GetMapping("{accountNumber}/movements")
-    public List<MovementItemResponse> createClient(
+    public List<MovementItemResponse> createAccount(
             @PathVariable String accountNumber
     ) {
         return this.logic.getAccountMovement(accountNumber)

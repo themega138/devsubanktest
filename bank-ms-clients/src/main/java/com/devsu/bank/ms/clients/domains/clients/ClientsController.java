@@ -1,10 +1,10 @@
-package com.devsu.bank.ms.clients.domains.client;
+package com.devsu.bank.ms.clients.domains.clients;
 
-import com.devsu.bank.ms.clients.domains.client.models.ClientCreateRequest;
-import com.devsu.bank.ms.clients.domains.client.models.ClientDTO;
-import com.devsu.bank.ms.clients.domains.client.models.ClientDetailResponse;
-import com.devsu.bank.ms.clients.domains.client.models.ClientItemResponse;
-import com.devsu.bank.ms.clients.domains.client.models.ClientUpdateRequest;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientCreateRequest;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientDTO;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientDetailResponse;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientItemResponse;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientUpdateRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

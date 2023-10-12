@@ -1,9 +1,8 @@
-package com.devsu.bank.ms.clients.domains.client.models;
+package com.devsu.bank.ms.clients.domains.clients.models;
 
 import com.devsu.bank.ms.clients.domains.commons.models.Person;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

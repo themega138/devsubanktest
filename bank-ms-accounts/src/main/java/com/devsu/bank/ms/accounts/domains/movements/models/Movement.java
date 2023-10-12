@@ -27,6 +27,7 @@ public class Movement extends AbstractEntity {
     private Account account;
     private LocalDateTime date;
     private BigDecimal amount;
+    private BigDecimal initialBalance;
     private BigDecimal currentBalance;
     private MovementType type;
     private Boolean state;

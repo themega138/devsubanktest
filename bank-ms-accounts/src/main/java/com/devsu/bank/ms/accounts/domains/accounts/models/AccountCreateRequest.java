@@ -4,8 +4,10 @@ import java.math.BigDecimal;
 
 public record AccountCreateRequest(
         String clientId,
+        String clientUid,
         String number,
         BigDecimal balance,
-        Boolean state
+        Boolean state,
+        AccountType type
 ) {
 }

@@ -1,17 +1,13 @@
-package com.devsu.bank.ms.clients.domains.client.models;
+package com.devsu.bank.ms.clients.domains.clients.models;
 
-import lombok.Builder;
-
-@Builder
-public record ClientDetailResponse(
-        Long id,
-        String uid,
+public record ClientCreateRequest(
         String name,
         String gender,
         Integer age,
         String personalId,
         String address,
         String phone,
+        String password,
         Boolean state
 ) {
 }

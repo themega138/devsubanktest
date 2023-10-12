@@ -1,11 +1,11 @@
-package com.devsu.bank.ms.clients.domains.client;
+package com.devsu.bank.ms.clients.domains.clients;
 
-import com.devsu.bank.ms.clients.domains.client.models.Client;
-import com.devsu.bank.ms.clients.domains.client.models.ClientCreateRequest;
-import com.devsu.bank.ms.clients.domains.client.models.ClientDTO;
-import com.devsu.bank.ms.clients.domains.client.models.ClientDetailResponse;
-import com.devsu.bank.ms.clients.domains.client.models.ClientItemResponse;
-import com.devsu.bank.ms.clients.domains.client.models.ClientUpdateRequest;
+import com.devsu.bank.ms.clients.domains.clients.models.Client;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientCreateRequest;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientDTO;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientDetailResponse;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientItemResponse;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientUpdateRequest;
 import com.devsu.bank.ms.clients.domains.commons.ICrudMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

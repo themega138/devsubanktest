@@ -14,7 +14,6 @@ public record ClientDTO(
         String personalId,
         String address,
         String phone,
-        String clientId,
         String password,
         Boolean state
 ) {

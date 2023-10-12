@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 public record AccountDetailResponse(
         Long id,
         String uid,
-        String clientId,
+        Long clientId,
+        String clientUid,
         String number,
         BigDecimal balance,
-        Boolean state
+        Boolean state,
+        AccountType type
 ) {
 }

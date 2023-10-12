@@ -1,7 +1,7 @@
-package com.devsu.bank.ms.clients.domains.client;
+package com.devsu.bank.ms.clients.domains.clients;
 
-import com.devsu.bank.ms.clients.domains.client.models.Client;
-import com.devsu.bank.ms.clients.domains.client.models.ClientDTO;
+import com.devsu.bank.ms.clients.domains.clients.models.Client;
+import com.devsu.bank.ms.clients.domains.clients.models.ClientDTO;
 import com.devsu.bank.ms.clients.domains.commons.DefaultAbstractCrudLogic;
 import com.devsu.bank.ms.clients.domains.commons.utils.BCrypt;
 import org.springframework.stereotype.Component;

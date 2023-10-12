@@ -13,6 +13,7 @@ public record MovementDetailResponse(
         AccountDetailResponse accountDetailResponse,
         LocalDateTime date,
         BigDecimal amount,
+        BigDecimal initialBalance,
         BigDecimal currentBalance,
         String type,
         Boolean state

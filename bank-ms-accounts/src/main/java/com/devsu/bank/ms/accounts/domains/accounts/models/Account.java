@@ -20,8 +20,10 @@ import java.math.BigDecimal;
 public class Account extends AbstractEntity {
 
     @Column(nullable = false)
-    private String clientId;
-    @Column(unique = true)
+    private Long clientId;
+    @Column(nullable = false)
+    private String clientUid;
+    @Column(unique = true, nullable = false)
     private String number;
     private AccountType type;
     private BigDecimal balance;
