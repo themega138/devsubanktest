@@ -12,7 +12,6 @@ public record ClientDetailResponse(
         String personalId,
         String address,
         String phone,
-        String clientId,
         Boolean state
 ) {
 }

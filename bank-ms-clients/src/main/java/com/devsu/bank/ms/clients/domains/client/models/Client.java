@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
 @Entity
 public class Client extends Person {
 
-    private String clientId;
     private Boolean state;
     private String password;
 

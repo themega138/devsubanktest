@@ -28,7 +28,6 @@ public interface ClientsMapper extends ICrudMapper<ClientDTO, Client> {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "uid", ignore = true)
-    @Mapping(target = "clientId", ignore = true)
     @Mapping(target = "password", ignore = true)
     Client updateEntity(@MappingTarget Client entity, ClientDTO data);
 
