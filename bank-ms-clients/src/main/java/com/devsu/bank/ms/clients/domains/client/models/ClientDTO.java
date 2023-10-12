@@ -8,7 +8,7 @@ import java.util.UUID;
 @Builder
 public record ClientDTO(
         Long id,
-        UUID uuid,
+        UUID uid,
         String name,
         Gender gender,
         Integer age,
@@ -16,7 +16,6 @@ public record ClientDTO(
         String address,
         String phone,
         String clientId,
-
         String password,
         Boolean state
 ) {

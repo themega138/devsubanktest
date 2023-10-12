@@ -5,7 +5,7 @@ import lombok.Builder;
 @Builder
 public record ClientItemResponse (
         Long id,
-        String uuid,
+        String uid,
         String name,
         String gender,
         Integer age,

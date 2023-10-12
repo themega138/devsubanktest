@@ -2,20 +2,18 @@ package com.devsu.bank.ms.clients.domains.commons.models;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
 public class Person extends AbstractEntity {
-    private UUID uuid;
     private String name;
     private Gender gender;
     private Integer age;

@@ -4,11 +4,13 @@ import com.devsu.bank.ms.clients.domains.client.models.ClientCreateRequest;
 import com.devsu.bank.ms.clients.domains.client.models.ClientDTO;
 import com.devsu.bank.ms.clients.domains.client.models.ClientDetailResponse;
 import com.devsu.bank.ms.clients.domains.client.models.ClientItemResponse;
-import com.devsu.bank.ms.clients.domains.commons.errors.ResourceNotFoundException;
-import com.devsu.bank.ms.clients.domains.commons.models.Gender;
+import com.devsu.bank.ms.clients.domains.client.models.ClientUpdateRequest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,9 +23,11 @@ import java.util.List;
 public class ClientsController {
 
     private final IClientsLogic clientsLogic;
+    private final ClientsMapper mapper;
 
-    public ClientsController(IClientsLogic clientsLogic) {
+    public ClientsController(IClientsLogic clientsLogic, ClientsMapper mapper) {
         this.clientsLogic = clientsLogic;
+        this.mapper = mapper;
     }
 
     @GetMapping()
@@ -31,65 +35,37 @@ public class ClientsController {
             @RequestParam(defaultValue = "0") final Integer pageNumber,
             @RequestParam(defaultValue = "20") final Integer size
     ) {
-        return this.clientsLogic.paginateClients(PageRequest.of(pageNumber, size))
-                .map(ClientsController::toClientResponse)
+        return this.clientsLogic.paginate(PageRequest.of(pageNumber, size))
+                .map(mapper::toItemResponse)
                 .toList();
     }
 
     @GetMapping("{id}")
     public ClientDetailResponse getClientDetail(
-            @RequestParam() final Long id
-    ) {
-        return this.clientsLogic.getClient(id)
-                .map(ClientsController::toClientDetailResponse)
-                .orElseThrow(ResourceNotFoundException::new);
+            @PathVariable Long id) {
+        return mapper.toDetailResponse(this.clientsLogic.getOne(id));
     }
 
     @PostMapping()
     public ClientDetailResponse createClient(
             @RequestBody() ClientCreateRequest data
     ) {
-        ClientDTO result = this.clientsLogic.createClient(this.toClientDTO(data));
-        return toClientDetailResponse(result);
+        ClientDTO result = this.clientsLogic.createOne(mapper.toDTO(data));
+        return mapper.toDetailResponse(result);
     }
 
-    private ClientDTO toClientDTO(ClientCreateRequest data) {
-        return ClientDTO.builder()
-                .address(data.address())
-                .state(data.state())
-                .phone(data.phone())
-                .name(data.name())
-                .personalId(data.personalId())
-                .gender(Gender.valueOf(data.gender()))
-                .build();
+    @DeleteMapping("{id}")
+    public void deleteClient(
+            @PathVariable Long id) {
+        this.clientsLogic.deleteOne(id);
     }
-    private static ClientDetailResponse toClientDetailResponse(ClientDTO dto) {
-        return ClientDetailResponse.builder()
-                .id(dto.id())
-                .address(dto.address())
-                .clientId(dto.clientId())
-                .age(dto.age())
-                .phone(dto.phone())
-                .state(dto.state())
-                .uuid(dto.uuid().toString())
-                .name(dto.name())
-                .gender(dto.gender().toString())
-                .personalId(dto.personalId())
-                .build();
-    }
-    private static ClientItemResponse toClientResponse(ClientDTO dto) {
-        return ClientItemResponse.builder()
-                .id(dto.id())
-                .address(dto.address())
-                .clientId(dto.clientId())
-                .age(dto.age())
-                .phone(dto.phone())
-                .state(dto.state())
-                .uuid(dto.uuid().toString())
-                .name(dto.name())
-                .gender(dto.gender().toString())
-                .personalId(dto.personalId())
-                .build();
+
+    @PutMapping("{id}")
+    public void updateClient(
+            @PathVariable Long id,
+            @RequestBody ClientUpdateRequest data
+            ) {
+        this.clientsLogic.updateOne(id, mapper.toDTO(data));
     }
 
 }
