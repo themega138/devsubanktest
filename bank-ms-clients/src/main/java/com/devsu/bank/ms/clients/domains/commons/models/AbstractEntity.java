@@ -13,10 +13,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
-@SuperBuilder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @MappedSuperclass
 public class AbstractEntity {
 

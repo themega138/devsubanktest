@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 @MappedSuperclass
 public class Person extends AbstractEntity {
     private String name;
