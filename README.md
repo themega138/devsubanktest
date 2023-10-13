@@ -1,2 +1,0 @@
-# devsubanktest
-Devsu bank test

@@ -16,6 +16,7 @@ import org.mapstruct.ReportingPolicy;
 import java.util.UUID;
 
 @Mapper(
+        componentModel = MappingConstants.ComponentModel.SPRING,
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         imports = {UUID.class}
 )

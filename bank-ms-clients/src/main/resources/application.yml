@@ -1,7 +1,6 @@
-spring.datasource.url: jdbc:h2:file:~/clients_db;DB_CLOSE_DELAY=-1
+spring.datasource.url: jdbc:h2:file:./clients_db;DB_CLOSE_DELAY=-1
 spring.datasource.username: sa
 spring.datasource.password: sa
 server.port: 8081
-spring.jpa.generate-ddl: true
 spring.h2.console.enabled: true
 springdoc.show-actuator: true
