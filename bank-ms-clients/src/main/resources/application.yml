@@ -4,3 +4,6 @@ spring.datasource.password: sa
 server.port: 8081
 spring.h2.console.enabled: true
 springdoc.show-actuator: true
+server:
+  error:
+    include-stacktrace: never

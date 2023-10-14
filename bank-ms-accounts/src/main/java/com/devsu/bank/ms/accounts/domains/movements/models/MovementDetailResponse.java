@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public record MovementDetailResponse(
         Long id,
         String uid,
-        AccountDetailResponse accountDetailResponse,
+        AccountDetailResponse account,
         LocalDateTime date,
         BigDecimal amount,
         BigDecimal initialBalance,

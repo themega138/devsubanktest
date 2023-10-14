@@ -4,15 +4,19 @@ import com.devsu.bank.ms.accounts.domains.accounts.models.Account;
 import com.devsu.bank.ms.accounts.domains.accounts.models.AccountDTO;
 import com.devsu.bank.ms.accounts.domains.accounts.models.ClientDTO;
 import com.devsu.bank.ms.accounts.domains.commons.DefaultAbstractCrudLogic;
+import com.devsu.bank.ms.accounts.domains.commons.errors.ResourceNotFoundException;
+import com.devsu.bank.ms.accounts.domains.commons.errors.WrongMovementException;
 import com.devsu.bank.ms.accounts.domains.movements.MovementsMapper;
 import com.devsu.bank.ms.accounts.domains.movements.MovementsRepo;
 import com.devsu.bank.ms.accounts.domains.movements.models.Movement;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementDTO;
+import com.devsu.bank.ms.accounts.domains.movements.models.MovementType;
 import com.devsu.bank.ms.accounts.services.clients.IClientsService;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -47,16 +51,18 @@ public class DefaultAccountsLogicImpl extends DefaultAbstractCrudLogic<AccountDT
 
     @Override
     public AccountDTO createOne(AccountDTO accountDTO) {
-        this.clientsService.getByClientId(accountDTO.getClient().id());
+        ClientDTO client = this.clientsService.getByClientId(accountDTO.getClient().id());
+        if(Objects.isNull(client)) throw new ResourceNotFoundException("The client with the id %s does not exists...".formatted(accountDTO.getClient().id()));
         return super.createOne(accountDTO);
     }
 
     @Override
+    @Transactional
     public MovementDTO createAccountMovement(String accountNumber, MovementDTO dto) {
-        Account account = this.accountsRepo.findByNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Wrong account number..."));
         Movement entity = this.movementsMapper.toEntity(dto);
-        entity.setAccount(account);
+        entity.setAccount(Account.builder()
+                .number(accountNumber)
+                .build());
 
         return Optional.of(this.movementsRepo.createMovement(entity))
                 .map(this.movementsMapper::toDTO)

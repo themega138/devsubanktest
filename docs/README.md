@@ -1,7 +1,15 @@
 # Getting Started
 
-### GITHUB Repository
-https://github.com/themega138/devsubanktest
+### [GITHUB Repository](https://github.com/themega138/devsubanktest)
+
+### [Postman api](https://www.postman.com/restless-crescent-153447/workspace/devsu-bank-test/overview)
+
+### Swagger api
+#### [Client MS](http://localhost:8081/swagger-ui/index.html)
+#### [Accounts MS](http://localhost:8082/swagger-ui/index.html)
+
+### DB migration
+Both microservices use flyway to populate an H2 db automatically. If you need to clear the db just delete the .mv.db files generated on the devsubanktest
 
 ### Reference Documentation
 For further reference, please consider the following sections:

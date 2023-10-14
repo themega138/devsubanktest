@@ -25,6 +25,10 @@ import java.util.UUID;
 )
 public interface MovementsMapper extends ICrudMapper<MovementDTO, Movement> {
 
+    @Override
+    @Mapping(target = "account", source = "account")
+    MovementDTO toDTO(Movement movement);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "uid", defaultExpression = "java(UUID.randomUUID())")
     @Mapping(target = "date", defaultExpression = "java(LocalDateTime.now())")
@@ -35,6 +39,7 @@ public interface MovementsMapper extends ICrudMapper<MovementDTO, Movement> {
     @Mapping(target = "accountNumber", source = "account.number")
     MovementItemResponse toItemResponse(MovementDTO movementDTO);
 
+    @Mapping(target = "account", source = "account")
     MovementDetailResponse toDetailResponse(MovementDTO one);
 
     MovementDTO toDTO(MovementCreateRequest data);

@@ -2,6 +2,7 @@ package com.devsu.bank.ms.accounts.domains.movements;
 
 import com.devsu.bank.ms.accounts.domains.accounts.models.ClientDTO;
 import com.devsu.bank.ms.accounts.domains.commons.DefaultAbstractCrudLogic;
+import com.devsu.bank.ms.accounts.domains.commons.errors.ResourceNotFoundException;
 import com.devsu.bank.ms.accounts.domains.movements.models.Movement;
 import com.devsu.bank.ms.accounts.domains.movements.models.MovementDTO;
 import com.devsu.bank.ms.accounts.services.clients.IClientsService;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -40,6 +42,7 @@ public class DefaultMovementsLogicImpl extends DefaultAbstractCrudLogic<Movement
     @Transactional(readOnly = true)
     public List<MovementDTO> paginate(Long clientId, LocalDateTime startDate, LocalDateTime endDate, PageRequest page) {
         ClientDTO client = this.clientsService.getByClientId(clientId);
+        if(Objects.isNull(client)) throw new ResourceNotFoundException("The client with the id %s does not exists...".formatted(clientId));
         return this.movementsRepo.findAllByAccount_ClientIdAndDateIsBetween(clientId, startDate, endDate, page)
                 .map(this.mapper::toDTO)
                 .map(movementDTO -> this.mapper.updateClient(movementDTO, client))

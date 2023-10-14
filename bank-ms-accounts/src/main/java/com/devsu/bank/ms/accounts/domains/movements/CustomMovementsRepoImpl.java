@@ -23,6 +23,15 @@ public class CustomMovementsRepoImpl implements CustomMovementsRepo {
     @Override
     @Transactional
     public Movement createMovement(Movement movement) {
+        if (movement.getAmount().doubleValue() == 0.0) {
+            throw new WrongMovementException("The movement amount should not be 0.0");
+        }
+        if(movement.getAmount().doubleValue() > 0 && MovementType.WITHDRAW.equals(movement.getType())) {
+            throw new WrongMovementException("Wrong movement type. Change the movement type to DEPOSIT or make the amount negative.");
+        }
+        if(movement.getAmount().doubleValue() < 0 && MovementType.DEPOSIT.equals(movement.getType())) {
+            throw new WrongMovementException("Wrong movement type. Change the movement type to WITHDRAW or make the amount positive.");
+        }
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Account> q = cb.createQuery(Account.class);
@@ -43,6 +52,8 @@ public class CustomMovementsRepoImpl implements CustomMovementsRepo {
         if (MovementType.WITHDRAW == movement.getType() && account.getBalance().doubleValue() < Math.abs(movement.getAmount().doubleValue())) {
             throw new WrongMovementException("The account does not have enough balance to do this movement...");
         }
+
+        movement.setAccount(account);
 
         movement.setInitialBalance(BigDecimal.valueOf(account.getBalance().doubleValue()));
         BigDecimal newBalance = BigDecimal.valueOf(account.getBalance().add(movement.getAmount()).doubleValue());
